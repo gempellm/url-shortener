@@ -9,7 +9,6 @@ import (
 	"os"
 )
 
-// /adler32 !!!! попробовать
 var templates = template.Must(template.ParseFiles("index.html", "saved.html"))
 
 type Payload struct {
@@ -18,11 +17,8 @@ type Payload struct {
 
 func main() {
 	http.HandleFunc("/", viewHandler)
-	http.HandleFunc("/test/", handler)
 	http.HandleFunc("/saved/", saveHandler)
 	log.Fatal(http.ListenAndServe(":8080", nil))
-	fmt.Println(hash("https://stackoverflow.com/questions/13582519/how-to-generate-hash-number-of-a-string-in-go"))
-	fmt.Println(hash("https://betterprogramming.pub/a-short-guide-to-hashing-in-go-e8bb0173e97e"))
 }
 
 func hash(s string) string {
@@ -31,10 +27,6 @@ func hash(s string) string {
 	hash := h.Sum32()
 
 	return fmt.Sprint(hash)
-}
-
-func handler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprintf(w, "Hello World!")
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
@@ -70,18 +62,3 @@ func renderTemplate(w http.ResponseWriter, tmpl string, p *Payload) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
-
-/*func convert(hash string) string {
-	var result []rune
-	if len(hash) < 4 {
-		var sum rune
-		for _, r := range hash {
-			sum += r
-		}
-		result = append(result, sum)
-
-		return string(result)
-	}
-
-	return convert(hash[:3]) + convert(hash[3:])
-}*/
