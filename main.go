@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"hash/adler32"
 	"html/template"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 )
 
 var templates = template.Must(template.ParseFiles("index.html", "saved.html"))
@@ -32,7 +32,7 @@ func hash(s string) string {
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	if len(r.URL.Path) > 1 {
 		filename := "./data/" + r.URL.Path[1:] + ".txt"
-		URL, err := os.ReadFile(filename)
+		URL, err := ioutil.ReadFile(filename)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
@@ -48,7 +48,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 	URL := r.FormValue("body")
 	hash := hash(URL)
 	filename := "./data/" + hash + ".txt"
-	err := os.WriteFile(filename, []byte(URL), 0600)
+	err := ioutil.WriteFile(filename, []byte(URL), 0600)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
