@@ -57,7 +57,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	renderTemplate(w, "saved", &Payload{URL: localURL + hash})
+	renderTemplate(w, "saved", &Payload{URL: serverURL + hash})
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Payload) {
