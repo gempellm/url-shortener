@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 )
 
 var templates = template.Must(template.ParseFiles("index.html", "saved.html"))
@@ -31,7 +32,8 @@ func hash(s string) string {
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	if len(r.URL.Path) > 1 {
-		filename := "/data/" + r.URL.Path[1:] + ".txt"
+		curdir, _ := os.Getwd()
+		filename := curdir + "/data/" + r.URL.Path[1:] + ".txt"
 		URL, err := ioutil.ReadFile(filename)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
