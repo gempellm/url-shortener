@@ -33,7 +33,7 @@ func hash(s string) string {
 func viewHandler(w http.ResponseWriter, r *http.Request) {
 	if len(r.URL.Path) > 1 {
 		curdir, _ := os.Getwd()
-		filename := curdir + "data/" + r.URL.Path[1:] + ".txt"
+		filename := curdir + "/data/" + r.URL.Path[1:] + ".txt"
 		URL, err := ioutil.ReadFile(filename)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
