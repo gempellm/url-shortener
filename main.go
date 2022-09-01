@@ -26,12 +26,12 @@ func hash(s string) string {
 	h.Write([]byte(s))
 	hash := h.Sum32()
 
-	return fmt.Sprint(hash)
+	return fmt.Sprintf("%x", hash)
 }
 
 func viewHandler(w http.ResponseWriter, r *http.Request) {
-	if len(r.URL.Path) != 1 {
-		filename := r.URL.Path[1:] + ".txt"
+	if len(r.URL.Path) > 1 {
+		filename := "./data/" + r.URL.Path[1:] + ".txt"
 		URL, err := os.ReadFile(filename)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -47,7 +47,7 @@ func viewHandler(w http.ResponseWriter, r *http.Request) {
 func saveHandler(w http.ResponseWriter, r *http.Request) {
 	URL := r.FormValue("body")
 	hash := hash(URL)
-	filename := hash + ".txt"
+	filename := "./data/" + hash + ".txt"
 	err := os.WriteFile(filename, []byte(URL), 0600)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
