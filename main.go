@@ -11,6 +11,8 @@ import (
 )
 
 var templates = template.Must(template.ParseFiles("index.html", "saved.html"))
+var serverURL = "http://91.203.192.110:8080/"
+var localURL = "http://localhost:8080/"
 
 type Payload struct {
 	URL string
@@ -55,7 +57,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	renderTemplate(w, "saved", &Payload{URL: "http://91.203.192.110:8080/" + hash})
+	renderTemplate(w, "saved", &Payload{URL: localURL + hash})
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Payload) {
