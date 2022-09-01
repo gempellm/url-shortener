@@ -53,7 +53,7 @@ func saveHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	renderTemplate(w, "saved", &Payload{URL: "http://localhost:8080/" + hash})
+	renderTemplate(w, "saved", &Payload{URL: "http://91.203.192.110:8080/" + hash})
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Payload) {
