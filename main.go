@@ -11,7 +11,7 @@ import (
 )
 
 var templates = template.Must(template.ParseFiles("index.html", "saved.html"))
-var serverURL = "http://91.203.192.110:8080/"
+var serverURL = "http://itgempel.ru/"
 var localURL = "http://localhost:8080/"
 
 type Payload struct {
