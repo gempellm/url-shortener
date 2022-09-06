@@ -21,7 +21,7 @@ type Payload struct {
 func main() {
 	http.HandleFunc("/", viewHandler)
 	http.HandleFunc("/saved/", saveHandler)
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":80", nil))
 }
 
 func hash(s string) string {
